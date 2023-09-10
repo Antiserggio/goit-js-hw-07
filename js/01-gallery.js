@@ -13,14 +13,14 @@ function createGalleryMarkup(items) {
     .map(
       ({ original, preview, description }) =>
         ` <li class="gallery__item">
-             <a class="gallery__link" href="${original} " onclick="event.preventDefault()">
-             <img
-             class="gallery__image"
-             src="${preview}"
-             data-source="${original}"
-             alt="${description}"
-             />
-             </a>
+            <a class="gallery__link" href="${original} " onclick="event.preventDefault()">
+            <img
+            class="gallery__image"
+            src="${preview}"
+            data-source="${original}"
+            alt="${description}"
+            />
+            </a>
         </li>`
     )
 
