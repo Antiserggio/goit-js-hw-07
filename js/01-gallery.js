@@ -13,7 +13,7 @@ function createGalleryMarkup(items) {
     .map(
       ({ original, preview, description }) =>
         ` <li class="gallery__item">
-            <a class="gallery__link" href="${original} " onclick="event.preventDefault()">
+            <a class="gallery__link" href="${original}" onclick="event.preventDefault()">
             <img
             class="gallery__image"
             src="${preview}"
@@ -29,13 +29,23 @@ function createGalleryMarkup(items) {
 
 function handleClick(evt) {
   //   console.log(evt.target.nodeName);
-  if (evt.target === evt.currentTarget) {
+  if (evt.target.tagName !== "IMG") {
     return;
   }
 
-  const instance = basicLightbox.create(`
+  const instance = basicLightbox.create(
+    `
     <img src="${evt.target.dataset.source}" width="1280" >
-`);
+`,
+    {
+      onShow: (instance) => {
+        window.addEventListener("keydown", onEscKeyPress);
+      },
+      onClose: (instance) => {
+        window.removeEventListener("keydown", onEscKeyPress);
+      },
+    }
+  );
 
   instance.show();
 
@@ -44,4 +54,9 @@ function handleClick(evt) {
       instance.close();
     }
   });
+
+  function onEscKeyPress(e) {
+    if (e.code !== "Escape") return;
+    instance.close();
+  }
 }
